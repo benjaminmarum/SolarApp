@@ -1,0 +1,58 @@
+{
+    "array": [
+      {
+        "id": 1,
+        "image": "./images/aloe.jpg",
+        "surfaceType" : "test",
+        "surfaceName" : "test",
+        "surfaceModQty" : "test",
+        "surfaceTilt" : "test",
+        "surfaceSubType" : "test",
+        "surfaceStrucType" : "test",
+        "surfaceStrucSizing" : "test",
+        "surfaceStrucSpacing" : "test",
+        "surfacePocDistance" : "test"
+      },
+      {
+        "id": 2,
+        "name": "ZZ Plant",
+        "image": "./images/zz-plant.jpg",
+        "surfaceType" : "",
+        "surfaceName" : "",
+        "surfaceModQty" : "",
+        "surfaceTilt" : "",
+        "surfaceSubType" : "",
+        "surfaceStrucType" : "",
+        "surfaceStrucSizing" : "",
+        "surfaceStrucSpacing" : "",
+        "surfacePocDistance" : ""
+      },
+     
+      {
+        "id": 3,
+        "image": "./images/aloe.jpg",
+        "surfaceType" : "test",
+        "surfaceName" : "test",
+        "surfaceModQty" : "test",
+        "surfaceTilt" : "test",
+        "surfaceSubType" : "test",
+        "surfaceStrucType" : "test",
+        "surfaceStrucSizing" : "test",
+        "surfaceStrucSpacing" : "test",
+        "surfacePocDistance" : "test"
+      },
+      {
+        "id": 4,
+        "image": "./images/aloe.jpg",
+        "surfaceType" : "test",
+        "surfaceName" : "test",
+        "surfaceModQty" : "test",
+        "surfaceTilt" : "test",
+        "surfaceSubType" : "test",
+        "surfaceStrucType" : "test",
+        "surfaceStrucSizing" : "test",
+        "surfaceStrucSpacing" : "test",
+        "surfacePocDistance" : "test"
+      }
+    ]
+  }

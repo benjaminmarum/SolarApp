@@ -1,0 +1,67 @@
+{
+    "equipment": [
+        {
+            "modules": [
+                {
+                    "Manufacturer": "SunPower"
+                  
+                },
+                {
+                    "Manufacturer": "LG Electronics Inc."
+                  
+                },
+                {
+                    "Manufacturer": "Silfab Solar Inc."
+                  
+                },
+                {
+                    "Manufacturer": "REC Solar"
+                  
+                }
+            ]
+        },
+        {
+            "inverters": [
+                {
+                    "Manufacturer Name": "Enphase Energy Inc."
+                   
+                },
+                {
+                    "Manufacturer Name": "Enphase Energy Inc."
+                   
+                },
+                {
+                    "Manufacturer Name": "Enphase Energy Inc."
+                    
+                },
+                {
+                    "Manufacturer Name": "Enphase Energy Inc."
+                   
+                },
+                {
+                    "Manufacturer Name": "Enphase Energy Inc."
+                    
+                },
+                {
+                    "Manufacturer Name": "SolarEdge Technologies Ltd."
+                   
+                },
+                {
+                    "Manufacturer Name": "SolarEdge Technologies Ltd."
+                   
+                },
+                {
+                    "Manufacturer Name": "SolarEdge Technologies Ltd."
+                   
+                },
+                {
+                    "Manufacturer Name": "Fronius International GmbH"
+                   
+                },
+                {
+                    "Manufacturer Name": "Fronius International GmbH"
+                }
+            ]
+        }
+    ]
+}
