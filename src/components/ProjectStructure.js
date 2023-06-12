@@ -152,6 +152,14 @@ function ProjectStructure() {
                                     </select>
                                 </div>
 
+                                 <div>
+                                    <label>Choose a Standoff:</label>
+                                    <select v-model="atttachmentType" id="standoff" name="standoff">
+                                        <option value="Unirac">Unirac Flashloc</option>
+                                        <option value="IronRidge">Ironridge Flashfoot </option>
+                                    </select>
+                                </div>
+
                                 <div>
                                     <label>Choose a Rail:</label>
                                     <select v-model="railType" id="standoff" name="standoff">
