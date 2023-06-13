@@ -5,9 +5,9 @@ import * as Yup from 'yup';
 
 function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals }) {
     //------------------------------------------------------------>
-    const [projectModCount, setProjectModCount] = useState(0);
-    const [projectModule, setProjectModule] = useState('');
-    const [projectInverter, setProjectInverter] = useState('');
+    // const [projectModCount, setProjectModCount] = useState(0);
+    // const [projectModule, setProjectModule] = useState('');
+    // const [projectInverter, setProjectInverter] = useState('');
 
     console.log(initElectricalFormVals)
 
@@ -49,7 +49,6 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
 
     return (
         <Formik
-            initialValues={{ projectModCount: 0, projectModule: '', projectInverter: '' }}
             onSubmit={(values) => {
                 console.log(values);
             }}
@@ -57,12 +56,6 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
             {/* //------------------------------------------------------------> */}
             <Form className="form">
                 <button type='submit'> Save Project Data </button>
-
-
-
-
-
-
 
                 <fieldset>
                     <h3>Project Electrical</h3>
@@ -97,50 +90,60 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                     </div>
 
                     <div>
-                        <FormControl
-                            sx={{
-                                backgroundColor: 'primary.light',
-                                '&:hover': {
-                                    backgroundColor: 'primary.hover',
-                                    opacity: [0.9, 0.8, 0.7],
-                                },
-                            }} fullWidth>
-                            <InputLabel id="modSelect-label">Solar Module</InputLabel>
-                            <Select
-                                labelId="modSelect-label"
-                                id="demo-simple-select"
-                                name="projectModule"
-                                value={projectModule}
-                                label="Solar Module"
-                                onChange={handleModuleChange}
-                            >
-                                {solarModules}
-                            </Select>
-                        </FormControl>
+                        <Field name="projectModCount">
+                            {({ field }) => (
+                                <FormControl
+                                    sx={{
+                                        backgroundColor: 'primary.light',
+                                        '&:hover': {
+                                            backgroundColor: 'primary.hover',
+                                            opacity: [0.9, 0.8, 0.7],
+                                        },
+                                    }} fullWidth>
+                                    <>
+                                        <InputLabel id="modSelect-label">Solar Module</InputLabel>
+                                        <Select
+                                            labelId="modSelect-label"
+                                            id="demo-simple-select"
+                                            name="projectModule"
+                                            value={projectModule}
+                                            label="Solar Module"
+                                            onChange={handleModuleChange}
+                                        >
+                                            {solarModules}
+                                        </Select>
+                                    </>
+                                </FormControl>
+                            )}
+                        </Field>
 
                     </div>
                     <br />
                     <div>
-                        <FormControl sx={{
-                            backgroundColor: 'primary.light',
-                            '&:hover': {
-                                backgroundColor: 'primary.hover',
-                                opacity: [0.9, 0.8, 0.7],
-                            },
-                        }} fullWidth>
-                            <InputLabel id="invSelect-label">Solar Inverter(s)</InputLabel>
-                            <Select
-                                labelId="invSelect-label"
-                                id="demo-simple-select"
-                                type="text"
-                                name='projectInverter'
-                                value={projectInverter}
-                                label="Solar Inverter(s)"
-                                onChange={handleInverterChange}
-                            >
-                                {solarInverters}
-                            </Select>
-                        </FormControl>
+                        <Field name="projectModCount">
+                            {({ field }) => (
+                                <FormControl sx={{
+                                    backgroundColor: 'primary.light',
+                                    '&:hover': {
+                                        backgroundColor: 'primary.hover',
+                                        opacity: [0.9, 0.8, 0.7],
+                                    },
+                                }} fullWidth>
+                                    <InputLabel id="invSelect-label">Solar Inverter(s)</InputLabel>
+                                    <Select
+                                        labelId="invSelect-label"
+                                        id="demo-simple-select"
+                                        type="text"
+                                        name='projectInverter'
+                                        value={projectInverter}
+                                        label="Solar Inverter(s)"
+                                        onChange={handleInverterChange}
+                                    >
+                                        {solarInverters}
+                                    </Select>
+                                </FormControl>
+                            )}
+                        </Field>
                     </div>
 
                 </fieldset>

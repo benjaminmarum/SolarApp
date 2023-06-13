@@ -104,7 +104,7 @@ function App() {
         projectModCount: 0,
         projectModule: '',
         projectInverter: '',
-      };
+    };
 
 
 
@@ -136,13 +136,13 @@ function App() {
                 initialValues={{
                     customerForm: { firstName: '', lastName: '', },
                     siteForm: {},
-                    electricalForm: {initElectricalFormVals},
+                    electricalForm: { initElectricalFormVals },
                     structuralForm: {},
                     surface1Form: { field3: '', field4: '' },
                 }}
                 onSubmit={handleSubmit}
             >
-                <div id = 'App'>
+                <div id='App'>
                     {/*---------------------------------------------------------------------> */}
                     <div>
                         <SolarForm />
