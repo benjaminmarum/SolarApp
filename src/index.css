@@ -97,7 +97,23 @@ body {
   justify-content: space-evenly;
 }
 
-.strucSpan{
+.strucSpan {
   display: flex;
   flex-direction: row;
+}
+
+/* ------------------------------------------------------------------------------- */
+/* Save Button */
+#save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#saveBtn {
+  height: 10vmin;
+  width: 60vmax;
+  border-radius: 10px;
+  font-size: 1.5em;
+  font-weight: 500;
 }

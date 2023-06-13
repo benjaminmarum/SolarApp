@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 import { MenuItem, Select, InputLabel, FormControl, TextField, InputAdornment, OutlinedInput } from '@mui/material';
 import * as Yup from 'yup';
 
-function ProjectElectrical({ moduleData, inverterData, theme }) {
+function ProjectElectrical({ moduleData, inverterData, formElecRef }) {
     const [projectModCount, setProjectModCount] = useState(0);
     const [projectModule, setProjectModule] = useState('');
     const [projectInverter, setProjectInverter] = useState('');
@@ -39,29 +39,15 @@ function ProjectElectrical({ moduleData, inverterData, theme }) {
         <div>
             <Formik
 
+                innerRef={formElecRef}
+
                 initialValues={{
-                    option: ''
+                    projectModCount: 0,
+                    projectModule: '',
+                    projectInverter: '',
                 }}
 
-                validate={values => {
-                    const errors = {};
-                    if (!values.label) {
-                        errors.label = 'Required';
-                    } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.label)
-                    ) {
-                        errors.label = 'Invalid email address';
-                    }
-                    return errors;
-                }}
-
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
-                }}
-
+                onSubmit={() => {}}
             >
 
                 {({ isSubmitting, values, handleChange }) => (
@@ -86,7 +72,7 @@ function ProjectElectrical({ moduleData, inverterData, theme }) {
                                                 id="outlined-adornment-password"
                                                 variant="filled"
                                                 type="number"
-                                                name="moduleQty"
+                                                name="projectModCount"
                                                 value={projectModCount}
                                                 onChange={handleModuleCount}
                                                 label="Project Module Count"
@@ -109,6 +95,7 @@ function ProjectElectrical({ moduleData, inverterData, theme }) {
                                             <Select
                                                 labelId="modSelect-label"
                                                 id="demo-simple-select"
+                                                name="projectModule"
                                                 value={projectModule}
                                                 label="Solar Module"
                                                 onChange={handleModuleChange}
@@ -131,6 +118,7 @@ function ProjectElectrical({ moduleData, inverterData, theme }) {
                                             <Select
                                                 labelId="invSelect-label"
                                                 id="demo-simple-select"
+                                                name='projectInverter'
                                                 value={projectInverter}
                                                 label="Solar Inverter(s)"
                                                 onChange={handleInverterChange}
@@ -140,27 +128,6 @@ function ProjectElectrical({ moduleData, inverterData, theme }) {
                                         </FormControl>
                                     </div>
 
-                                {/* 
-                                <div>
-                                    <label>Choose a Standoff:</label>
-                                    <select v-model="atttachmentType" id="standoff" name="standoff">
-                                        <option value="Unirac">Unirac Flashloc</option>
-                                        <option value="IronRidge">Ironridge Flashfoot </option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label>Choose a Rail:</label>
-                                    <select v-model="railType" id="standoff" name="standoff">
-                                        <option value="Unirac">Unirac Solarmount </option>
-                                        <option value="IronRidge">Ironridge XR100</option>
-                                    </select>
-                                </div>
-
-                                <label>Roof Quantity:</label>
-                                <input v-model="roofQuantity" type="number" />
-                                
-                                */}
                                 </fieldset>
                             )}
                         />

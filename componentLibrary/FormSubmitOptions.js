@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { MenuItem, Select } from '@mui/material';
 
-const FormSubmitOptions = () => {
+const FormSubmitOptions = ({handleSubmit}) => {
   return (
     <Formik
       initialValues={{ option: '' }}

@@ -56,7 +56,12 @@ function ProjectStructural() {
             <Formik
 
                 initialValues={{
-                    option: ''
+                    projectType : '',
+                    projectFlashEq : '',
+                    projectFlashEqPic : '',
+                    projectMountEq : '',
+                    projectMountEqPic : '',
+                    projectNumSurface : 1,
                 }}
 
                 validate={values => {
@@ -72,6 +77,7 @@ function ProjectStructural() {
                 }}
 
                 onSubmit={(values, { setSubmitting }) => {
+                    handleAllFormSubmit(values);
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
                         setSubmitting(false);

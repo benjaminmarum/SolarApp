@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ProjectElectrical from './ProjectElectrical';
 import ProjectStructural from './ProjectStructural';
-import SurfacesPage from './ProjectStructural';
 import { createTheme,ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 
 
-function Home() {
+function Home({form1Ref, form2Ref}) {
   //--------> Variables
   const [moduleData, setModuleData] = useState([]);
   const [inverterData, setInverterData] = useState([]);
@@ -100,8 +99,8 @@ function Home() {
     <ThemeProvider theme={theme}>
       <div>
         <h3>Project Details</h3>
-        <ProjectElectrical moduleData={moduleData} inverterData={inverterData} theme={theme}/>
-        <SurfacesPage />
+        <ProjectElectrical moduleData={moduleData} inverterData={inverterData} form1Ref={form1Ref}/>
+        <ProjectStructural form2Ref={form2Ref}/>
       </div>
     </ThemeProvider>
   );
