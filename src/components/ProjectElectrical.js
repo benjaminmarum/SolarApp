@@ -4,14 +4,7 @@ import { MenuItem, Select, InputLabel, FormControl, TextField, InputAdornment, O
 import * as Yup from 'yup';
 
 function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals }) {
-    //------------------------------------------------------------>
-    // const [projectModCount, setProjectModCount] = useState(0);
-    // const [projectModule, setProjectModule] = useState('');
-    // const [projectInverter, setProjectInverter] = useState('');
-
-    console.log(initElectricalFormVals)
-
-    //------------------------------------------------------------>
+  //------------------------------------------------------------>
 
     const solarModules = moduleData.map((module, index) => {
         return (
@@ -49,6 +42,7 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
 
     return (
         <Formik
+            initialValues={{ initElectricalFormVals  }}
             onSubmit={(values) => {
                 console.log(values);
             }}
@@ -62,7 +56,7 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
 
                     <div>
                         <Field name="projectModCount">
-                            {({ field }) => (
+                            {({ field, form }) => (
                                 <FormControl
                                     sx={{
                                         backgroundColor: 'primary.light',
@@ -78,8 +72,8 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                             id="outlined-adornment-password"
                                             variant="filled"
                                             type="number"
-                                            value={projectModCount}
-                                            onChange={handleModuleCount}
+                                            value={field.value}
+                                            onChange={(value) => form.handleChange(value)}
                                             label="Project Module Count"
                                         />
                                     </>
@@ -89,9 +83,11 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                         </Field>
                     </div>
 
+                    <br/>
+
                     <div>
-                        <Field name="projectModCount">
-                            {({ field }) => (
+                        <Field name="projectModule">
+                            {({ field, form }) => (
                                 <FormControl
                                     sx={{
                                         backgroundColor: 'primary.light',
@@ -103,12 +99,13 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                     <>
                                         <InputLabel id="modSelect-label">Solar Module</InputLabel>
                                         <Select
+                                            {...field}
                                             labelId="modSelect-label"
                                             id="demo-simple-select"
                                             name="projectModule"
-                                            value={projectModule}
+                                            value={field.value}
+                                            onChange={(value) => form.handleChange(value)}
                                             label="Solar Module"
-                                            onChange={handleModuleChange}
                                         >
                                             {solarModules}
                                         </Select>
@@ -116,12 +113,13 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                 </FormControl>
                             )}
                         </Field>
-
                     </div>
+
                     <br />
+
                     <div>
-                        <Field name="projectModCount">
-                            {({ field }) => (
+                        <Field name="projectInverter">
+                            {({ field, form }) => (
                                 <FormControl sx={{
                                     backgroundColor: 'primary.light',
                                     '&:hover': {
@@ -131,13 +129,14 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                 }} fullWidth>
                                     <InputLabel id="invSelect-label">Solar Inverter(s)</InputLabel>
                                     <Select
+                                        {...field}
                                         labelId="invSelect-label"
                                         id="demo-simple-select"
                                         type="text"
                                         name='projectInverter'
-                                        value={projectInverter}
+                                        value={field.value}
+                                        onChange={(value) => form.handleChange(value)}
                                         label="Solar Inverter(s)"
-                                        onChange={handleInverterChange}
                                     >
                                         {solarInverters}
                                     </Select>
