@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProjectElectrical from './ProjectElectrical';
-import ProjectStructure from './ProjectStructure';
+import ProjectStructural from './ProjectStructural';
+import SurfacesPage from './ProjectStructural';
 import { createTheme,ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 
 
@@ -100,7 +101,7 @@ function Home() {
       <div>
         <h3>Project Details</h3>
         <ProjectElectrical moduleData={moduleData} inverterData={inverterData} theme={theme}/>
-        <ProjectStructure />
+        <SurfacesPage />
       </div>
     </ThemeProvider>
   );

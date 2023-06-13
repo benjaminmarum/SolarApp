@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import ReactForm from './reactForm';
-import SolarForm from './SolarForm';
-import BasicFormik from './BasicFormik';
-import FormikForm from './FormikForm';
+
+// import BasicFormik from '../../componentLibrary/BasicFormik';
+// import FormikForm from '../../componentLibrary/FormikForm';
+// import ReactForm from '../../componentLibrary/reactForm';
+
+
 import Landing from './Landing';
+import SolarForm from './SolarForm';
 import Home from './Home';
-import BuilderForm from './BuilderForm';
+import FormSubmitOptions from './FormSubmitOptions';
 
 
 function App() {
@@ -15,26 +18,15 @@ function App() {
     return (
         <>
             <div>
-                {state}
-            </div>
-            <br/>
-            <div>
-                <ReactForm />
-            </div>
-            <br/>
-            <div>
-                <BasicFormik />
-            </div>
-            <br/>
-            <div>
                 <SolarForm />
             </div>
             <br/>
             <div>
                 <Home />
             </div>
+            <br/>
             <div>
-                <BuilderForm />
+                <FormSubmitOptions />
             </div>
             <br/>
         </>

@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 function ProjectStructure() {
     const [projectType, setProjectType] = useState('');
     const [projectMountEQ, setProjectMountEQ] = useState('');
-    const [projectNumSurface, setProjectNumSurface] = useState(2);
+    const [projectNumSurface, setProjectNumSurface] = useState(1);
 
     const handleSurfaceCount = (event) => {
         setProjectNumSurface(parseInt(event.target.value));
@@ -17,16 +17,13 @@ function ProjectStructure() {
         setProjectMountEQ(event.target.value);
     };
 
+    const handleFlashChange = (event) => {
+        setProjectMountEQ(event.target.value);
+    };
+
     const handleTypeChange = (event) => {
         setProjectType(event.target.value);
     };
-
-
-    //   const surfaceCards = searchElements.map((plant) => {
-    //     return (
-    //       <PlantCard key={plant.id} id={plant.id} plant={plant} setDeleteID={setDeleteID} handleDeleteFetch={handleDeleteFetch} />
-    //     )
-    //   });
 
     return (
         <div>
@@ -34,18 +31,6 @@ function ProjectStructure() {
 
                 initialValues={{
                     option: ''
-                }}
-
-                validate={values => {
-                    const errors = {};
-                    if (!values.label) {
-                        errors.label = 'Required';
-                    } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.label)
-                    ) {
-                        errors.label = 'Invalid email address';
-                    }
-                    return errors;
                 }}
 
                 onSubmit={(values, { setSubmitting }) => {
@@ -64,9 +49,10 @@ function ProjectStructure() {
                             render={arrayHelpers => (
                                 <>
                                     <fieldset>
+
                                         <h3>Project Structural</h3>
 
-                                        <div>
+                                        <div id="projectModQty">
                                             <FormControl sx={{
                                                 backgroundColor: 'primary.light',
                                                 width: '40%',
@@ -90,8 +76,36 @@ function ProjectStructure() {
                                             </FormControl>
                                             <br />
                                         </div>
+
                                         <br />
-                                        <div>
+
+                                        <div id='projectFlashingEq'>
+                                            <FormControl sx={{
+                                                backgroundColor: 'primary.light',
+                                                width: '40%',
+                                                '&:hover': {
+                                                    backgroundColor: 'primary.hover',
+                                                    opacity: [0.9, 0.8, 0.7],
+                                                },
+                                            }}>
+                                                <InputLabel id="flashSelect-label">Flashing Kit</InputLabel>
+                                                <Select
+                                                    labelId="flashSelect-label"
+                                                    id="flashSelect-label"
+                                                    value={projectMountEQ}
+                                                    label="flashting Equipment"
+                                                    onChange={handleFlashChange}
+                                                >
+                                                    <MenuItem key={'Unirac'} value={'Unirac Flashloc'}>Unirac Flashloc</MenuItem>
+                                                    <MenuItem key={'IronRidge'} value={'Ironridge Flashfoot'}>Ironridge Flashfoot</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                            <br />
+                                        </div>
+
+                                        <br />
+
+                                        <div id='projectMountingEq'>
                                             <FormControl sx={{
                                                 backgroundColor: 'primary.light',
                                                 width: '40%',
@@ -116,6 +130,7 @@ function ProjectStructure() {
                                         </div>
 
                                         <br />
+                                        
                                         <div>
                                             <FormControl sx={{
                                                 backgroundColor: 'primary.light',
@@ -144,6 +159,7 @@ function ProjectStructure() {
                                         <br />  <br />
 
                                         {/* 
+
                                 <div>
                                     <label>Choose a Standoff:</label>
                                     <select v-model="atttachmentType" id="standoff" name="standoff">
@@ -179,9 +195,9 @@ function ProjectStructure() {
                     </Form>
                 )}
             </Formik>
-            <fieldset>
+            <fieldset id="surfaceArray">
                 {Array.from({ length: projectNumSurface }, (_, index) => (
-                    <SurfaceCard key={index} id={index + 1} />
+                    <SurfaceCard key={index} id={index + 1} projectType={projectType} />
                 ))}
             </fieldset>
         </div>
