@@ -1,0 +1,117 @@
+/* ------------------------------------------------------------------------------- */
+/* Base App  */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #f0f0f0;
+}
+
+body {
+  color: #999999;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  padding: 1rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga" on;
+  font-feature-settings: "liga";
+}
+
+/* ------------------------------------------------------------------------------- */
+/* Project Electrical */
+
+
+
+/* ------------------------------------------------------------------------------- */
+/* Project Sturctural */
+#structuralDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#structureForm {
+  width: 35%;
+  padding: 10px;
+}
+
+#projectSurfaces {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 10px
+}
+
+/* ------------------------------------------------------------------------------- */
+/* Proj Structural Images in MountingPics Component  */
+
+#mountingPics {
+  width: 50%;
+  height: 100%;
+  margin-bottom: 2.5vh;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#flashing {
+  width: 20vw;
+  max-height: 100%;
+}
+
+#mounting {
+  width: 20vw;
+  max-height: 100%;
+}
+
+#spacer {
+  width: 3vw;
+}
+
+#flashingPic {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#mountPic {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+#projectSurfaces {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.strucSpan {
+  display: flex;
+  flex-direction: row;
+}
+
+/* ------------------------------------------------------------------------------- */
+/* Save Button */
+#save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#saveBtn {
+  height: 10vmin;
+  width: 60vmax;
+  border-radius: 10px;
+  font-size: 1.5em;
+  font-weight: 500;
+}
