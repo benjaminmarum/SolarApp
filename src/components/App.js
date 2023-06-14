@@ -1,17 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from 'formik';
-
-
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 
-import Landing from './Landing';
-import SolarForm from './SolarForm';
 import ProjectElectrical from './ProjectElectrical';
 import ProjectStructural from './ProjectStructural';
 import SaveButton from './SaveButton';
 
 
 const App = () => {
+    //Variables-------------------------------------------------------------------> 
+    const [moduleData, setModuleData] = useState([]);
+    const [inverterData, setInverterData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    //Values-------------------------------------------------------------------> 
+    const [ProjectData, setParentValues] = useState({});
 
     //Init Fetch------------------------------------------------------------------>
     useEffect(() => {
@@ -84,27 +88,45 @@ const App = () => {
         },
     });
 
-    //Variables-------------------------------------------------------------------> 
-    const [moduleData, setModuleData] = useState([]);
-    const [inverterData, setInverterData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    
+
     //FormValues------------------------------------------------------------> 
 
 
 
     //Handle Submit-----------------> 
-    const handleSubmit = (values) => {
+    // const handleSubmit = (values) => {
+    //     // Perform actions to submit both forms
+    //     console.log('Form 1 data:', values.electricalForm);
+    //     console.log('Form 2 data:', values.structuralForm);
+    // };
 
-        // Handle the form data from the child components
+    const handleSubmit = (updatedValues) => {
+        // Perform actions with the updated form values
+        console.log('Updated Form Values:', updatedValues);
+    };
 
-        console.log('Form data:', values);
+    const handleChildSubmit = (childValues) => {
+        // Update the parent component's values
+        setParentValues(childValues);
+    };
+
+
+    // Inside the component function
+    const handleChange = (updatedValues) => {
+        onSubmit(updatedValues); // Call the parent component's handleSubmit function
     };
 
 
 
     //Initialize Forms--------------------------------------------------> 
+    const initCustomerFormVals = {
+        // Define initial values for the customer form
+    };
+
+    const initSiteFormVals = {
+        // Define initial values for the site form
+    };
+
     const initElectricalFormVals = {
         projectModCount: 0,
         projectModule: '',
@@ -120,16 +142,20 @@ const App = () => {
         projectNumSurface: 2,
     };
 
+    const initSurface1Vals = {
+        // Define initial values for the site form
+    };
+
     return (
         <ThemeProvider theme={theme}>
 
             <Formik
                 initialValues={{
-                    customerForm: {},
-                    siteForm: {},
+                    customerForm: initCustomerFormVals,
+                    siteForm: initSiteFormVals,
                     electricalForm: initElectricalFormVals,
                     structuralForm: initStructuralFormVals,
-                    surface1Form: {},
+                    surface1Form: initSurface1Vals,
                 }}
                 onSubmit={handleSubmit}
             >
@@ -147,14 +173,19 @@ const App = () => {
                         <div>
                             <h3>Project Details</h3>
                             {/*-------------------------------------------> */}
+
                             <ProjectElectrical
                                 moduleData={moduleData}
                                 inverterData={inverterData}
                                 values={values.electricalForm}
+                                handleChange={handleChange} // Pass the handleSubmit function
                             />
+
                             {/*-------------------------------------------> */}
+
                             <ProjectStructural
                                 values={values.structuralForm}
+                                onSubmit={handleSubmit} // Pass the handleSubmit function
                             />
                             {/*--------------------------------------------> */}
                         </div>
@@ -163,7 +194,7 @@ const App = () => {
                         <br />
                         {/*---------------------------------------------------------------------> */}
                         <div>
-                            <SaveButton handleSubmit={handleSubmit} />
+                            <SaveButton handleSubmit={handleSubmit} values={values} />
                         </div>
                         {/*---------------------------------------------------------------------> */}
                     </div>

@@ -11,9 +11,10 @@ import IronridgeFlashingPic from '../assets/img/IronRidge_FlashFoot2_Tech_Brief_
 import UniracMountingPic from '../assets/img/SM_Product-Brochure_1.png'
 import IronridgeMountingPic from '../assets/img/IronRidge_XR_Rail_Family_Tech_Brief_1.png'
 
-function ProjectStructural({ values }) {
+function ProjectStructural({ values, handleChange}) {
     //------------------------------------------------------------------------------------------------------>
     const { setFieldValue } = useFormikContext();
+    
 
     const [projectType, setProjectType] = useState('');
     const [projectNumSurface, setProjectNumSurface] = useState(2);
@@ -25,7 +26,8 @@ function ProjectStructural({ values }) {
 
     const handleSubmit = (values) => {
         // Call the onSubmit callback function passed from the parent
-        const structuralData = values.form1;
+
+        const structuralData = values.structuralForm;
 
         // Pass the formValues to the parent component
 
@@ -75,14 +77,14 @@ function ProjectStructural({ values }) {
     };
 
     // Access the field values
-    console.log(values);
+    // console.log(values);
 
     //------------------------------------------------------------------------------------------------------>
     return (
         <>
-            <Formik initialValues={values} onSubmit={handleSubmit}>
+            <Formik initialValues={values}>
                 {/* //------------------------------------------------------------------------------------------> */}
-                <Form id="projectStructural" className="projectStructural">\
+                <Form name='structuralForm' id="projectStructural" className="projectStructural">
                     {/* <button type='submit'> Save Project Data </button> */}
 
                     <fieldset >
@@ -114,7 +116,8 @@ function ProjectStructural({ values }) {
                                                         value={field.value}
                                                         onChange={(event) => {
                                                             form.handleChange(event); // Call Formik's handleChange
-                                                            setProjectType(event); // Call your custom handler
+                                                            handleTypeChange(event); // Call your custom handler
+                                                            handleChange(event); // Update the parent component's form values
                                                         }}
                                                         label="Project Type"
 
@@ -156,6 +159,7 @@ function ProjectStructural({ values }) {
                                                     onChange={(event) => {
                                                         form.handleChange(event); // Call Formik's handleChange
                                                         handleFlashChange(event); // Call your custom handler
+                                                        handleChange(event); // Update the parent component's form values
                                                     }}
                                                 >
                                                     <MenuItem key={undefined} value={undefined}>Select Flash Kit</MenuItem>
@@ -194,6 +198,7 @@ function ProjectStructural({ values }) {
                                                     onChange={(event) => {
                                                         form.handleChange(event); // Call Formik's handleChange
                                                         handleMountChange(event); // Call your custom handler
+                                                        handleChange(event); // Update the parent component's form values
                                                     }}
                                                 >
                                                     <MenuItem key={''} value={undefined}>Mounting Equipment</MenuItem>
@@ -232,6 +237,7 @@ function ProjectStructural({ values }) {
                                                     onChange={(event) => {
                                                         form.handleChange(event); // Call Formik's handleChange
                                                         handleSurfaceCount(event); // Call your custom handler
+                                                        handleChange(event); // Update the parent component's form values
                                                     }}
                                                     label="Number of Surfaces"
                                                 >

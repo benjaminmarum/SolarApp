@@ -1,49 +1,38 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from 'formik';
 import { MenuItem, Select, InputLabel, FormControl, TextField, InputAdornment, OutlinedInput, Input, FormHelperText } from '@mui/material'
 import * as Yup from 'yup';
 
-function ProjectElectrical({ moduleData, inverterData, values }) {
+function ProjectElectrical({ moduleData, inverterData, values, handleChange}) {
 
     //------------------------------------------------------------------------------------------------------>
 
-    const solarModules = moduleData.map((module, index) => {
-        return (
-            <MenuItem key={index} value={module["Model Number"]}>{module.Manufacturer} {module["Model Number"]}</MenuItem>
-        )
-    })
+    const solarModules = moduleData.map((module, index) => (
+        <MenuItem key={index} value={module["Model Number"]}>
+            {module.Manufacturer} {module["Model Number"]}
+        </MenuItem>
+    ));
 
-    const solarInverters = inverterData.map((inverter, index) => {
-        return (
-            <MenuItem key={index} value={inverter["Model Number1"]}>{inverter["Manufacturer Name"]} {inverter["Model Number1"]}</MenuItem>
-        )
-    })
+    const solarInverters = inverterData.map((inverter, index) => (
+        <MenuItem key={index} value={inverter["Model Number1"]}>
+            {inverter["Manufacturer Name"]} {inverter["Model Number1"]}
+        </MenuItem>
+    ));
 
     //------------------------------------------------------------------------------------------------------>
-    // Update Fields
-    // const handleUpdateField = (values) => {
-    //     // Update a field value in the form
-        
-    //     const newCount= values.projectModCount; // Get the new value from Formik's values
-    //     const newModule = values.projectModule; // Get the new value from Formik's values
-    //     const newInverter = values.projectInverter; // Get the new value from Formik's values
 
-    //     setFieldValue('projectModCount', newCount);
-    //     setFieldValue('projectModule', newModule);
-    //     setFieldValue('projectInverter', newInverter);
-    // };
+    // Example from ProjectElectrical component
+    // useEffect(() => {
+    //     handleChange(values); // Call handleChange whenever the form values change
+    // }, [values]);
 
-    const handleSubmit = (values) => {
-        console.log('Form data:', values);
-        // Other logic to handle the form data
-      };
     //------------------------------------------------------------------------------------------------------>
     //JSX
     return (
-        <Formik initialValues={values} onSubmit={handleSubmit}
+        <Formik initialValues={values} 
         >
             {/* //------------------------------------------------------------------------------------------> */}
-            <Form className="form">
+            <Form name="electricalForm">
                 {/* <button onClick={handleUpdateField}>Update Field</button>
                 <button type='submit'> Save Project Data </button> */}
 
@@ -71,7 +60,10 @@ function ProjectElectrical({ moduleData, inverterData, values }) {
                                             type="number"
                                             name="projectModCount"
                                             value={field.value}
-                                            onChange={form.handleChange}
+                                            onChange={(e) => {
+                                                form.handleChange(e);
+                                                handleChange(e); // Update the parent component's form values
+                                            }}
                                             label="Project Module Count"
                                         />
                                     </>
@@ -101,10 +93,13 @@ function ProjectElectrical({ moduleData, inverterData, values }) {
                                         <Select
                                             {...field}
                                             labelId="modSelect-label"
-                                            id="demo-simple-select"
+                                            id="modSelect-select"
                                             name="projectModule"
                                             value={field.value}
-                                            onChange={form.handleChange}
+                                            onChange={(e) => {
+                                                form.handleChange(e);
+                                                handleChange(e); // Update the parent component's form values
+                                            }}
                                             label="Solar Module"
                                         >
                                             <MenuItem key={''} value={undefined}>Solar Modules</MenuItem>
@@ -138,7 +133,10 @@ function ProjectElectrical({ moduleData, inverterData, values }) {
                                         type="text"
                                         name='projectInverter'
                                         value={field.value}
-                                        onChange={form.handleChange}
+                                        onChange={(e) => {
+                                            form.handleChange(e);
+                                            handleChange(e); // Update the parent component's form values
+                                        }}
                                         label="Solar Inverter(s)"
                                     >
                                         <MenuItem key={''} value={undefined}>Solar Inverter(s)</MenuItem>

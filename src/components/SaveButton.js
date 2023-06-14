@@ -1,8 +1,8 @@
 import React from 'react';
 
-const SaveButton = ({ handleSubmit }) => {
+const SaveButton = ({ handleSubmit, values }) => {
     const handleButtonClick = () => {
-        handleSubmit(); // Call the handleSubmit function provided by Formik
+        handleSubmit(values); // Call the handleSubmit function provided by Formik
     };
 
     return (
