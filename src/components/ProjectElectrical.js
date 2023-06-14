@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { Formik, Form, Field, FieldArray, ErrorMessage,  useFormikContext } from 'formik';
+import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from 'formik';
 import { MenuItem, Select, InputLabel, FormControl, TextField, InputAdornment, OutlinedInput, Input, FormHelperText } from '@mui/material'
 import * as Yup from 'yup';
 
-function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals }) {
+function ProjectElectrical({ moduleData, inverterData, values }) {
+
     //------------------------------------------------------------------------------------------------------>
 
     const solarModules = moduleData.map((module, index) => {
@@ -19,17 +20,32 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
     })
 
     //------------------------------------------------------------------------------------------------------>
+    // Update Fields
+    // const handleUpdateField = (values) => {
+    //     // Update a field value in the form
+        
+    //     const newCount= values.projectModCount; // Get the new value from Formik's values
+    //     const newModule = values.projectModule; // Get the new value from Formik's values
+    //     const newInverter = values.projectInverter; // Get the new value from Formik's values
 
+    //     setFieldValue('projectModCount', newCount);
+    //     setFieldValue('projectModule', newModule);
+    //     setFieldValue('projectInverter', newInverter);
+    // };
+
+    const handleSubmit = (values) => {
+        console.log('Form data:', values);
+        // Other logic to handle the form data
+      };
+    //------------------------------------------------------------------------------------------------------>
+    //JSX
     return (
-        <Formik
-            initialValues={{ initElectricalFormVals }}
-            onSubmit={(values) => {
-                console.log(values);
-            }}
+        <Formik initialValues={values} onSubmit={handleSubmit}
         >
             {/* //------------------------------------------------------------------------------------------> */}
             <Form className="form">
-                <button type='submit'> Save Project Data </button>
+                {/* <button onClick={handleUpdateField}>Update Field</button>
+                <button type='submit'> Save Project Data </button> */}
 
                 <fieldset>
                     <h3>Project Electrical</h3>
@@ -55,7 +71,7 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                             type="number"
                                             name="projectModCount"
                                             value={field.value}
-                                            onChange={(value) => form.handleChange(value)}
+                                            onChange={form.handleChange}
                                             label="Project Module Count"
                                         />
                                     </>
@@ -88,7 +104,7 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                             id="demo-simple-select"
                                             name="projectModule"
                                             value={field.value}
-                                            onChange={(value) => form.handleChange(value)}
+                                            onChange={form.handleChange}
                                             label="Solar Module"
                                         >
                                             <MenuItem key={''} value={undefined}>Solar Modules</MenuItem>
@@ -122,7 +138,7 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                         type="text"
                                         name='projectInverter'
                                         value={field.value}
-                                        onChange={(value) => form.handleChange(value)}
+                                        onChange={form.handleChange}
                                         label="Solar Inverter(s)"
                                     >
                                         <MenuItem key={''} value={undefined}>Solar Inverter(s)</MenuItem>

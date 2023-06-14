@@ -1,9 +1,15 @@
 import React from 'react';
 
 const SaveButton = ({ handleSubmit }) => {
+    const handleButtonClick = () => {
+        handleSubmit(); // Call the handleSubmit function provided by Formik
+    };
+
     return (
         <div id='save'>
-            <button id='saveBtn' type='submit' onClick={handleSubmit}>Save all Data</button>
+            <button type="button" onClick={handleButtonClick}>
+                Save Project Data
+            </button>
         </div>
     );
 };

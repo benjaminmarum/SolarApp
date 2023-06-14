@@ -11,18 +11,31 @@ import IronridgeFlashingPic from '../assets/img/IronRidge_FlashFoot2_Tech_Brief_
 import UniracMountingPic from '../assets/img/SM_Product-Brochure_1.png'
 import IronridgeMountingPic from '../assets/img/IronRidge_XR_Rail_Family_Tech_Brief_1.png'
 
-function ProjectStructural({ initStructuralFormVals }) {
+function ProjectStructural({ values }) {
     //------------------------------------------------------------------------------------------------------>
+    const { setFieldValue } = useFormikContext();
 
-    const [projectNumSurface, setProjectNumSurface] = useState(2);
     const [projectType, setProjectType] = useState('');
+    const [projectNumSurface, setProjectNumSurface] = useState(2);
+    
+    const [projectFlashEq, setProjectFlashEq] = useState('');
+    const [projectMountEq, setProjectMountEq] = useState('');
     const [projectFlashEqPic, setProjectFlashEqPic] = useState('');
     const [projectMountEqPic, setProjectMountEqPic] = useState('');
 
-    const { values } = useFormikContext();
+    const handleSubmit = (values) => {
+        // Call the onSubmit callback function passed from the parent
+        const structuralData = values.form1;
+
+        // Pass the formValues to the parent component
+
+
+        console.log('ProjectStructural form data:', structuralData);
+    };
+
 
     //------------------------------------------------------------------------------------------------------>
-   
+
     const handleTypeChange = (event) => {
         setProjectType(event.target.value);
     };
@@ -32,45 +45,45 @@ function ProjectStructural({ initStructuralFormVals }) {
     };
 
     const handleMountChange = (event) => {
-        setProjectMountEq(event.target.value);
-        if (event.target.value === 'Unirac SolarMount') {
+        const newValue = event.target.value;
+        setProjectMountEq(newValue);
+        if (newValue === 'Unirac SolarMount') {
             setProjectMountEqPic(UniracMountingPic);
-        } else if (event.target.value === 'Ironridge XR-100') {
+        } else if (newValue === 'Ironridge XR-100') {
             setProjectMountEqPic(IronridgeMountingPic);
         } else {
             setProjectMountEqPic('No Racking Selected');
-        };
+        }
+
+        // Update the form field value with the new value
+        setFieldValue('projectMountEq', newValue);
     };
 
     const handleFlashChange = (event) => {
-        setProjectFlashEq(event.target.value);
-        if (event.target.value === 'Unirac Flashloc') {
+        const newValue = event.target.value;
+        setProjectFlashEq(newValue);
+        if (newValue === 'Unirac Flashloc') {
             setProjectFlashEqPic(UniracFlashingPic);
-        } else if (event.target.value === 'Ironridge Flashfoot') {
+        } else if (newValue === 'Ironridge Flashfoot') {
             setProjectFlashEqPic(IronridgeFlashingPic);
         } else {
             setProjectFlashEqPic('No Flashing Selected');
-        };
+        }
+
+        // Update the form field value with the new value
+        setFieldValue('projectFlashEq', newValue);
     };
 
     // Access the field values
     console.log(values);
-    console.log(projectNumSurface); 
-    console.log(projectNumSurface);
-    console.log(initStructuralFormVals);
 
     //------------------------------------------------------------------------------------------------------>
     return (
         <>
-            <Formik
-                initialValues={{ initStructuralFormVals }}
-                onSubmit={(values) => {
-                    console.log(values);
-                }}
-            >
+            <Formik initialValues={values} onSubmit={handleSubmit}>
                 {/* //------------------------------------------------------------------------------------------> */}
                 <Form id="projectStructural" className="projectStructural">\
-                    <button type='submit'> Save Project Data </button>
+                    {/* <button type='submit'> Save Project Data </button> */}
 
                     <fieldset >
                         <h3>Project Structural</h3>
@@ -82,14 +95,15 @@ function ProjectStructural({ initStructuralFormVals }) {
                                 <div id='projType'>
                                     <Field name="projectType">
                                         {({ field, form }) => (
-                                            <FormControl sx={{
-                                                backgroundColor: 'primary.light',
-                                                width: '100%',
-                                                '&:hover': {
-                                                    backgroundColor: 'primary.hover',
-                                                    opacity: [0.9, 0.8, 0.7],
-                                                },
-                                            }} fullWidth>
+                                            <FormControl
+                                                sx={{
+                                                    backgroundColor: 'primary.light',
+                                                    width: '100%',
+                                                    '&:hover': {
+                                                        backgroundColor: 'primary.hover',
+                                                        opacity: [0.9, 0.8, 0.7],
+                                                    },
+                                                }} fullWidth>
                                                 <>
                                                     <InputLabel id="projectType-label">Project Type</InputLabel>
                                                     <Select
@@ -98,11 +112,14 @@ function ProjectStructural({ initStructuralFormVals }) {
                                                         id="projectType-label"
                                                         name="projectType"
                                                         value={field.value}
-                                                        onChange={(value) => form.handleChange(value)}
+                                                        onChange={(event) => {
+                                                            form.handleChange(event); // Call Formik's handleChange
+                                                            setProjectType(event); // Call your custom handler
+                                                        }}
                                                         label="Project Type"
 
                                                     >
-                                                        <MenuItem key={undefined} value={undefined}>Project Type</MenuItem>
+                                                        <MenuItem key={undefined} value={undefined}>Select Project Type</MenuItem>
                                                         <MenuItem key={'Roof Mount'} value={'Roof Mount'}>Roof Mount</MenuItem>
                                                         <MenuItem key={'Ground Mount'} value={'Ground Mount'}>Ground Mount</MenuItem>
                                                         <MenuItem key={'Car Port'} value={'Car Port'}>Car Port</MenuItem>
@@ -136,9 +153,12 @@ function ProjectStructural({ initStructuralFormVals }) {
                                                     label="flashting Equipment"
                                                     name="projectFlashEq"
                                                     value={field.value}
-                                                    onChange={(value) => form.handleChange(value)}
+                                                    onChange={(event) => {
+                                                        form.handleChange(event); // Call Formik's handleChange
+                                                        handleFlashChange(event); // Call your custom handler
+                                                    }}
                                                 >
-                                                    <MenuItem key={undefined} value={undefined}>Flash Kit</MenuItem>
+                                                    <MenuItem key={undefined} value={undefined}>Select Flash Kit</MenuItem>
                                                     <MenuItem key={'Unirac'} value={'Unirac Flashloc'}>Unirac Flashloc</MenuItem>
                                                     <MenuItem key={'IronRidge'} value={'Ironridge Flashfoot'}>Ironridge Flashfoot</MenuItem>
                                                 </Select>
@@ -171,7 +191,10 @@ function ProjectStructural({ initStructuralFormVals }) {
                                                     label="Mounting Equipment"
                                                     name="projectMountEq"
                                                     value={field.value}
-                                                    onChange={(value) => form.handleChange(value)}
+                                                    onChange={(event) => {
+                                                        form.handleChange(event); // Call Formik's handleChange
+                                                        handleMountChange(event); // Call your custom handler
+                                                    }}
                                                 >
                                                     <MenuItem key={''} value={undefined}>Mounting Equipment</MenuItem>
                                                     <MenuItem key={'UniracSM'} value={'Unirac SolarMount'}>Unirac SolarMount</MenuItem>
@@ -206,7 +229,10 @@ function ProjectStructural({ initStructuralFormVals }) {
                                                     id="numSurface-label"
                                                     name="projectNumSurface"
                                                     value={field.value}
-                                                    onChange={(value) => form.handleChange(value)}
+                                                    onChange={(event) => {
+                                                        form.handleChange(event); // Call Formik's handleChange
+                                                        handleSurfaceCount(event); // Call your custom handler
+                                                    }}
                                                     label="Number of Surfaces"
                                                 >
                                                     <MenuItem key={''} value={undefined}>Number of Surfaces</MenuItem>

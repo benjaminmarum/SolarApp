@@ -11,7 +11,7 @@ import ProjectStructural from './ProjectStructural';
 import SaveButton from './SaveButton';
 
 
-function App() {
+const App = () => {
 
     //Init Fetch------------------------------------------------------------------>
     useEffect(() => {
@@ -89,16 +89,20 @@ function App() {
     const [inverterData, setInverterData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    //Project Equipment-----------------> 
-    const [projectModCount, setProjectModCount] = useState(0);
-    const [projectModule, setProjectModule] = useState('');
-    const [projectInverter, setProjectInverter] = useState('');
+    
+    //FormValues------------------------------------------------------------> 
 
 
-    //Project Electrical-----------------> 
-    const formElecRef = useRef(null);
-    const [formElecData, setFormElecData] = useState({});
+
+    //Handle Submit-----------------> 
+    const handleSubmit = (values) => {
+
+        // Handle the form data from the child components
+
+        console.log('Form data:', values);
+    };
+
+
 
     //Initialize Forms--------------------------------------------------> 
     const initElectricalFormVals = {
@@ -116,33 +120,6 @@ function App() {
         projectNumSurface: 2,
     };
 
-    //FormValues------------------------------------------------------------> 
-    const { values: { customerForm, siteForm, electricalForm, structuralForm, surface1Form } } = useFormikContext();
-
-    // Access the field values for each form
-    console.log(customerForm);
-    console.log(siteForm);
-    console.log(electricalForm);
-    console.log(structuralForm);
-    console.log(surface1Form);
-  
-
-    //Handle All-----------------> 
-    const handleSubmit = () => {
-        // formData = electricalForm.values;
-        // // const form2Data = form2Ref.current.values;
-
-        // // Perform actions to submit both forms
-        // console.log('Form 1 data:', values.formData);
-        // console.log('Form 2 data:', form2Data);
-    };
-
-    //Handle Electrical-----------------> 
-    const handleFormElecSubmit = () => {
-        const formData = formElecRef.current;
-        setFormElecData(formData);
-    };
-
     return (
         <ThemeProvider theme={theme}>
 
@@ -150,36 +127,47 @@ function App() {
                 initialValues={{
                     customerForm: {},
                     siteForm: {},
-                    electricalForm: { initElectricalFormVals },
-                    structuralForm: { initStructuralFormVals },
+                    electricalForm: initElectricalFormVals,
+                    structuralForm: initStructuralFormVals,
                     surface1Form: {},
                 }}
                 onSubmit={handleSubmit}
             >
-                <div id='App'>
-                    {/*---------------------------------------------------------------------> */}
-                    <div>
-                        <SolarForm />
-                    </div>
-                    {/*---------------------------------------------------------------------> */}
-                    <br />
-                    {/*---------------------------------------------------------------------> */}
-                    <div>
+                {({ values }) => ( // Access Formik's values prop
+
+                    <div id='App'>
+                        {/*---------------------------------------------------------------------> */}
+                        <div>
+                            {/* <SolarForm /> */}
+                        </div>
+                        {/*---------------------------------------------------------------------> */}
+                        <br />
+                        {/*---------------------------------------------------------------------> */}
+
                         <div>
                             <h3>Project Details</h3>
-                            <ProjectElectrical moduleData={moduleData} inverterData={inverterData} initElectricalFormVals={initElectricalFormVals} />
-                            <ProjectStructural initStructuralFormVals={initStructuralFormVals} />
+                            {/*-------------------------------------------> */}
+                            <ProjectElectrical
+                                moduleData={moduleData}
+                                inverterData={inverterData}
+                                values={values.electricalForm}
+                            />
+                            {/*-------------------------------------------> */}
+                            <ProjectStructural
+                                values={values.structuralForm}
+                            />
+                            {/*--------------------------------------------> */}
                         </div>
-                    </div>
-                    {/*---------------------------------------------------------------------> */}
-                    <br />
-                    {/*---------------------------------------------------------------------> */}
-                    <div>
-                        <SaveButton handleSubmit={handleSubmit} />
-                    </div>
-                    {/*---------------------------------------------------------------------> */}
-                </div>
 
+                        {/*---------------------------------------------------------------------> */}
+                        <br />
+                        {/*---------------------------------------------------------------------> */}
+                        <div>
+                            <SaveButton handleSubmit={handleSubmit} />
+                        </div>
+                        {/*---------------------------------------------------------------------> */}
+                    </div>
+                )}
             </Formik>
 
         </ThemeProvider>
