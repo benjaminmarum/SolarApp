@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
+import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from 'formik';
 import { MenuItem, Select, InputLabel, FormControl, TextField, InputAdornment, OutlinedInput } from '@mui/material';
-import SurfaceCard from './SurfaceCard';
-import MountingPics from './MountingPics';
 import * as Yup from 'yup';
+
+import SurfaceStack from './SurfaceStack';
+import MountingPics from './MountingPics';
 
 import UniracFlashingPic from '../assets/img/FlashLoc-Comp_Brochure_Page1_23126.png'
 import IronridgeFlashingPic from '../assets/img/IronRidge_FlashFoot2_Tech_Brief_1.png'
-
 import UniracMountingPic from '../assets/img/SM_Product-Brochure_1.png'
 import IronridgeMountingPic from '../assets/img/IronRidge_XR_Rail_Family_Tech_Brief_1.png'
 
-function ProjectStructural() {
-    const [projectType, setProjectType] = useState('');
-    const [projectFlashEq, setProjectFlashEq] = useState('');
-    const [projectFlashEqPic, setProjectFlashEqPic] = useState('');
-    const [projectMountEq, setProjectMountEq] = useState('');
-    const [projectMountEqPic, setProjectMountEqPic] = useState('');
-    const [projectNumSurface, setProjectNumSurface] = useState(1);
+function ProjectStructural({ initStructuralFormVals }) {
+    //------------------------------------------------------------------------------------------------------>
 
+    const [projectNumSurface, setProjectNumSurface] = useState(2);
+    const [projectType, setProjectType] = useState('');
+    const [projectFlashEqPic, setProjectFlashEqPic] = useState('');
+    const [projectMountEqPic, setProjectMountEqPic] = useState('');
+
+    const { values } = useFormikContext();
+
+    //------------------------------------------------------------------------------------------------------>
+   
+    const handleTypeChange = (event) => {
+        setProjectType(event.target.value);
+    };
 
     const handleSurfaceCount = (event) => {
         setProjectNumSurface(parseInt(event.target.value));
@@ -35,11 +42,6 @@ function ProjectStructural() {
         };
     };
 
-    const handleTypeChange = (event) => {
-        setProjectType(event.target.value);
-    };
-
-
     const handleFlashChange = (event) => {
         setProjectFlashEq(event.target.value);
         if (event.target.value === 'Unirac Flashloc') {
@@ -51,178 +53,192 @@ function ProjectStructural() {
         };
     };
 
+    // Access the field values
+    console.log(values);
+    console.log(projectNumSurface); 
+    console.log(projectNumSurface);
+    console.log(initStructuralFormVals);
+
+    //------------------------------------------------------------------------------------------------------>
     return (
-        <div id='mountingDetails'>
+        <>
             <Formik
-
-                initialValues={{
-                    projectType : '',
-                    projectFlashEq : '',
-                    projectFlashEqPic : '',
-                    projectMountEq : '',
-                    projectMountEqPic : '',
-                    projectNumSurface : 1,
+                initialValues={{ initStructuralFormVals }}
+                onSubmit={(values) => {
+                    console.log(values);
                 }}
-
-                validate={values => {
-                    const errors = {};
-                    if (!values.label) {
-                        errors.label = 'REquired';
-                    } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.label)
-                    ) {
-                        errors.label = 'Invalid email address';
-                    }
-                    return errors;
-                }}
-
-                onSubmit={(values, { setSubmitting }) => {
-                    handleAllFormSubmit(values);
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
-                }}
-
             >
+                {/* //------------------------------------------------------------------------------------------> */}
+                <Form id="projectStructural" className="projectStructural">\
+                    <button type='submit'> Save Project Data </button>
 
-                {({ isSubmitting, values, handleChange }) => (
-                    <Form id="projectStructural" className="projectStructural">
-                        <FieldArray
-                            name="projectStructural"
-                            render={arrayHelpers => (
-                                <>
-                                    <fieldset >
-                                        <h3>Project Structural</h3>
-                                        <div id='structuralDiv'>
+                    <fieldset >
+                        <h3>Project Structural</h3>
+                        {/* //------------------------------------------------------------------------------------------> */}
+                        <div id='structuralDiv'>
 
-                                            <div id='structureForm'>
+                            <div id='structureForm'>
+                                {/* //------------------------------------------------------------------------------------------> */}
+                                <div id='projType'>
+                                    <Field name="projectType">
+                                        {({ field, form }) => (
+                                            <FormControl sx={{
+                                                backgroundColor: 'primary.light',
+                                                width: '100%',
+                                                '&:hover': {
+                                                    backgroundColor: 'primary.hover',
+                                                    opacity: [0.9, 0.8, 0.7],
+                                                },
+                                            }} fullWidth>
+                                                <>
+                                                    <InputLabel id="projectType-label">Project Type</InputLabel>
+                                                    <Select
+                                                        {...field}
+                                                        labelId="projectType-label"
+                                                        id="projectType-label"
+                                                        name="projectType"
+                                                        value={field.value}
+                                                        onChange={(value) => form.handleChange(value)}
+                                                        label="Project Type"
 
-                                                <div id='projectType'>
-                                                    <FormControl sx={{
-                                                        backgroundColor: 'primary.light',
-                                                        width: '100%',
-                                                        '&:hover': {
-                                                            backgroundColor: 'primary.hover',
-                                                            opacity: [0.9, 0.8, 0.7],
-                                                        },
-                                                    }} fullWidth>
-                                                        <InputLabel id="projectType-label">Project Type</InputLabel>
-                                                        <Select
-                                                            labelId="projectType-label"
-                                                            id="projectType-label"
-                                                            value={projectType}
-                                                            label="Project Type"
-                                                            onChange={handleTypeChange}
-                                                        >
-                                                            <MenuItem key={'Roof Mount'} value={'Roof Mount'}>Roof Mount</MenuItem>
-                                                            <MenuItem key={'Ground Mount'} value={'Ground Mount'}>Ground Mount</MenuItem>
-                                                            <MenuItem key={'Car Port'} value={'Car Port'}>Car Port</MenuItem>
-                                                        </Select>
-                                                    </FormControl>
-                                                    <br />
-                                                </div>
+                                                    >
+                                                        <MenuItem key={undefined} value={undefined}>Project Type</MenuItem>
+                                                        <MenuItem key={'Roof Mount'} value={'Roof Mount'}>Roof Mount</MenuItem>
+                                                        <MenuItem key={'Ground Mount'} value={'Ground Mount'}>Ground Mount</MenuItem>
+                                                        <MenuItem key={'Car Port'} value={'Car Port'}>Car Port</MenuItem>
+                                                    </Select>
+                                                </>
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                </div>
 
-                                                <br />
+                                {/* //------------------------------------------------------------------------------------------> */}
+                                <br />
+                                {/* //------------------------------------------------------------------------------------------> */}
 
-                                                <div id='projectFlashingEq'>
-                                                    <FormControl sx={{
-                                                        backgroundColor: 'primary.light',
-                                                        width: '100%',
-                                                        '&:hover': {
-                                                            backgroundColor: 'primary.hover',
-                                                            opacity: [0.9, 0.8, 0.7],
-                                                        },
-                                                    }}>
-                                                        <InputLabel id="flashSelect-label">Flashing Kit</InputLabel>
-                                                        <Select
-                                                            labelId="flashSelect-label"
-                                                            id="flashSelect-label"
-                                                            value={projectFlashEq}
-                                                            label="flashting Equipment"
-                                                            onChange={handleFlashChange}
-                                                        >
-                                                            <MenuItem key={'Unirac'} value={'Unirac Flashloc'}>Unirac Flashloc</MenuItem>
-                                                            <MenuItem key={'IronRidge'} value={'Ironridge Flashfoot'}>Ironridge Flashfoot</MenuItem>
-                                                        </Select>
-                                                    </FormControl>
-                                                    <br />
-                                                </div>
+                                <div id='FlashingEq'>
+                                    <Field name="projectFlashEq">
+                                        {({ field, form }) => (
+                                            <FormControl sx={{
+                                                backgroundColor: 'primary.light',
+                                                width: '100%',
+                                                '&:hover': {
+                                                    backgroundColor: 'primary.hover',
+                                                    opacity: [0.9, 0.8, 0.7],
+                                                },
+                                            }}>
+                                                <InputLabel id="flashSelect-label">Flashing Kit</InputLabel>
+                                                <Select
+                                                    {...field}
+                                                    labelId="flashSelect-label"
+                                                    id="flashSelect-label"
+                                                    label="flashting Equipment"
+                                                    name="projectFlashEq"
+                                                    value={field.value}
+                                                    onChange={(value) => form.handleChange(value)}
+                                                >
+                                                    <MenuItem key={undefined} value={undefined}>Flash Kit</MenuItem>
+                                                    <MenuItem key={'Unirac'} value={'Unirac Flashloc'}>Unirac Flashloc</MenuItem>
+                                                    <MenuItem key={'IronRidge'} value={'Ironridge Flashfoot'}>Ironridge Flashfoot</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                </div>
 
-                                                <br />
+                                {/* //------------------------------------------------------------------------------------------> */}
+                                <br />
+                                {/* //------------------------------------------------------------------------------------------> */}
 
-                                                <div id='projectMountingEq'>
-                                                    <FormControl sx={{
-                                                        backgroundColor: 'primary.light',
-                                                        width: '100%',
-                                                        '&:hover': {
-                                                            backgroundColor: 'primary.hover',
-                                                            opacity: [0.9, 0.8, 0.7],
-                                                        },
-                                                    }}>
-                                                        <InputLabel id="mountSelect-label">Mounting Equipment</InputLabel>
-                                                        <Select
-                                                            labelId="mountSelect-label"
-                                                            id="mountSelect-label"
-                                                            value={projectMountEq}
-                                                            label="Mounting Equipment"
-                                                            onChange={handleMountChange}
-                                                        >
-                                                            <MenuItem key={'UniracSM'} value={'Unirac SolarMount'}>Unirac SolarMount</MenuItem>
-                                                            <MenuItem key={'IronridgeXR'} value={'Ironridge XR-100'}>Ironridge XR-100</MenuItem>
-                                                        </Select>
-                                                    </FormControl>
-                                                    <br />
-                                                </div>
+                                <div id='projectMountingEq'>
+                                    <Field name="projectMountEq">
+                                        {({ field, form }) => (
 
-                                                <br />
+                                            <FormControl sx={{
+                                                backgroundColor: 'primary.light',
+                                                width: '100%',
+                                                '&:hover': {
+                                                    backgroundColor: 'primary.hover',
+                                                    opacity: [0.9, 0.8, 0.7],
+                                                },
+                                            }}>
+                                                <InputLabel id="mountSelect-label">Mounting Equipment</InputLabel>
+                                                <Select
+                                                    {...field}
+                                                    labelId="mountSelect-label"
+                                                    id="mountSelect-label"
+                                                    label="Mounting Equipment"
+                                                    name="projectMountEq"
+                                                    value={field.value}
+                                                    onChange={(value) => form.handleChange(value)}
+                                                >
+                                                    <MenuItem key={''} value={undefined}>Mounting Equipment</MenuItem>
+                                                    <MenuItem key={'UniracSM'} value={'Unirac SolarMount'}>Unirac SolarMount</MenuItem>
+                                                    <MenuItem key={'IronridgeXR'} value={'Ironridge XR-100'}>Ironridge XR-100</MenuItem>
+                                                </Select>
+                                            </FormControl>
 
-                                                <div id="numSurfaces">
-                                                    <FormControl sx={{
-                                                        backgroundColor: 'primary.light',
-                                                        width: '100%',
-                                                        '&:hover': {
-                                                            backgroundColor: 'primary.hover',
-                                                            opacity: [0.9, 0.8, 0.7],
-                                                        },
-                                                    }}>
-                                                        <InputLabel id="numSurface-label">Number of Surfaces</InputLabel>
-                                                        <Select
-                                                            labelId="numSurface-label"
-                                                            id="numSurface-label"
-                                                            value={projectNumSurface}
-                                                            label="Number of Surfaces"
-                                                            onChange={handleSurfaceCount}
-                                                        >
-                                                            <MenuItem key={'oneSurface'} value={1}>1</MenuItem>
-                                                            <MenuItem key={'twoSurface'} value={2}>2</MenuItem>
-                                                            <MenuItem key={'threeSurface'} value={3}>3</MenuItem>
-                                                            <MenuItem key={'fourSurface'} value={4}>4</MenuItem>
-                                                        </Select>
-                                                    </FormControl>
-                                                    <br />
-                                                </div>
+                                        )}
+                                    </Field>
+                                </div>
 
-                                                <br />
+                                {/* //------------------------------------------------------------------------------------------> */}
+                                <br />
+                                {/* //------------------------------------------------------------------------------------------> */}
 
-                                            </div>
+                                <div id="numSurfaces">
+                                    <Field name="projectNumSurface">
+                                        {({ field, form }) => (
 
-                                            <MountingPics FlashingImage={projectFlashEqPic}  MountingImage={projectMountEqPic} />
-                                       
-                                        </div>
-                                    </fieldset>
-                                </>
-                            )}
-                        />
-                    </Form>
-                )}
+                                            <FormControl sx={{
+                                                backgroundColor: 'primary.light',
+                                                width: '100%',
+                                                '&:hover': {
+                                                    backgroundColor: 'primary.hover',
+                                                    opacity: [0.9, 0.8, 0.7],
+                                                },
+                                            }}>
+                                                <InputLabel id="numSurface-label">Number of Surfaces</InputLabel>
+                                                <Select
+                                                    {...field}
+                                                    labelId="numSurface-label"
+                                                    id="numSurface-label"
+                                                    name="projectNumSurface"
+                                                    value={field.value}
+                                                    onChange={(value) => form.handleChange(value)}
+                                                    label="Number of Surfaces"
+                                                >
+                                                    <MenuItem key={''} value={undefined}>Number of Surfaces</MenuItem>
+                                                    <MenuItem key={'oneSurface'} value={1}>1</MenuItem>
+                                                    <MenuItem key={'twoSurface'} value={2}>2</MenuItem>
+                                                    <MenuItem key={'threeSurface'} value={3}>3</MenuItem>
+                                                    <MenuItem key={'fourSurface'} value={4}>4</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                </div>
+
+                                {/* //------------------------------------------------------------------------------------------> */}
+                            </div>
+
+                            <MountingPics FlashingImage={projectFlashEqPic} MountingImage={projectMountEqPic} />
+
+                        </div>
+                        {/* //------------------------------------------------------------------------------------------> */}
+                    </fieldset>
+
+
+                </Form>
+
             </Formik>
-            <fieldset id='projectSurfaces'>
-                {Array.from({ length: projectNumSurface }, (_, index) => (
-                    <SurfaceCard key={index} id={index + 1} projectType={projectType} />
-                ))}
-            </fieldset>
-        </div>
+            {/* //------------------------------------------------------------------------------------------> */}
+
+            <SurfaceStack projectNumSurface={projectNumSurface} projectType={projectType} />
+
+            {/* //------------------------------------------------------------------------------------------> */}
+        </>
     )
 };
 

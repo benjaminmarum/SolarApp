@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FieldArray, ErrorMessage, useFormikContext } from 'formik';
+
 
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 
@@ -106,12 +107,25 @@ function App() {
         projectInverter: '',
     };
 
+    const initStructuralFormVals = {
+        projectType: '',
+        projectFlashEq: '',
+        projectFlashEqPic: '',
+        projectMountEq: '',
+        projectMountEqPic: '',
+        projectNumSurface: 2,
+    };
 
+    //FormValues------------------------------------------------------------> 
+    const { values: { customerForm, siteForm, electricalForm, structuralForm, surface1Form } } = useFormikContext();
 
-
-
-
-    //Submit Handlers------------------------------------------------------------> 
+    // Access the field values for each form
+    console.log(customerForm);
+    console.log(siteForm);
+    console.log(electricalForm);
+    console.log(structuralForm);
+    console.log(surface1Form);
+  
 
     //Handle All-----------------> 
     const handleSubmit = () => {
@@ -134,11 +148,11 @@ function App() {
 
             <Formik
                 initialValues={{
-                    customerForm: { firstName: '', lastName: '', },
+                    customerForm: {},
                     siteForm: {},
                     electricalForm: { initElectricalFormVals },
-                    structuralForm: {},
-                    surface1Form: { field3: '', field4: '' },
+                    structuralForm: { initStructuralFormVals },
+                    surface1Form: {},
                 }}
                 onSubmit={handleSubmit}
             >
@@ -154,7 +168,7 @@ function App() {
                         <div>
                             <h3>Project Details</h3>
                             <ProjectElectrical moduleData={moduleData} inverterData={inverterData} initElectricalFormVals={initElectricalFormVals} />
-                            <ProjectStructural />
+                            <ProjectStructural initStructuralFormVals={initStructuralFormVals} />
                         </div>
                     </div>
                     {/*---------------------------------------------------------------------> */}

@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
+import { Formik, Form, Field, FieldArray, ErrorMessage,  useFormikContext } from 'formik';
 import { MenuItem, Select, InputLabel, FormControl, TextField, InputAdornment, OutlinedInput, Input, FormHelperText } from '@mui/material'
 import * as Yup from 'yup';
 
 function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals }) {
-  //------------------------------------------------------------>
+    //------------------------------------------------------------------------------------------------------>
 
     const solarModules = moduleData.map((module, index) => {
         return (
@@ -18,43 +18,24 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
         )
     })
 
-    //------------------------------------------------------------>
-
-    const handleModuleCount = (event) => {
-        console.log(event.target.value)
-        setProjectModCount(parseInt(event.target.value));
-    };
-
-    const handleModuleChange = (event) => {
-        setProjectModule(event.target.value);
-    };
-
-    const handleInverterChange = (event) => {
-        setProjectInverter(event.target.value);
-    };
-
-    const handleElecFormSubmit = (values) => {
-        console.log(values);
-        // Handle form submission logic here
-    };
-
-    //------------------------------------------------------------>
+    //------------------------------------------------------------------------------------------------------>
 
     return (
         <Formik
-            initialValues={{ initElectricalFormVals  }}
+            initialValues={{ initElectricalFormVals }}
             onSubmit={(values) => {
                 console.log(values);
             }}
         >
-            {/* //------------------------------------------------------------> */}
+            {/* //------------------------------------------------------------------------------------------> */}
             <Form className="form">
                 <button type='submit'> Save Project Data </button>
 
                 <fieldset>
                     <h3>Project Electrical</h3>
+                    {/* //------------------------------------------------------------------------------------------> */}
 
-                    <div>
+                    <div id='modQty'>
                         <Field name="projectModCount">
                             {({ field, form }) => (
                                 <FormControl
@@ -72,6 +53,7 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                             id="outlined-adornment-password"
                                             variant="filled"
                                             type="number"
+                                            name="projectModCount"
                                             value={field.value}
                                             onChange={(value) => form.handleChange(value)}
                                             label="Project Module Count"
@@ -83,9 +65,11 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                         </Field>
                     </div>
 
-                    <br/>
+                    {/* //------------------------------------------------------------------------------------------> */}
+                    <br />
+                    {/* //------------------------------------------------------------------------------------------> */}
 
-                    <div>
+                    <div id='modules'>
                         <Field name="projectModule">
                             {({ field, form }) => (
                                 <FormControl
@@ -107,6 +91,7 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                             onChange={(value) => form.handleChange(value)}
                                             label="Solar Module"
                                         >
+                                            <MenuItem key={''} value={undefined}>Solar Modules</MenuItem>
                                             {solarModules}
                                         </Select>
                                     </>
@@ -115,9 +100,11 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                         </Field>
                     </div>
 
+                    {/* //------------------------------------------------------------------------------------------> */}
                     <br />
+                    {/* //------------------------------------------------------------------------------------------> */}
 
-                    <div>
+                    <div id='inverter' >
                         <Field name="projectInverter">
                             {({ field, form }) => (
                                 <FormControl sx={{
@@ -138,6 +125,7 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                                         onChange={(value) => form.handleChange(value)}
                                         label="Solar Inverter(s)"
                                     >
+                                        <MenuItem key={''} value={undefined}>Solar Inverter(s)</MenuItem>
                                         {solarInverters}
                                     </Select>
                                 </FormControl>
@@ -145,8 +133,8 @@ function ProjectElectrical({ moduleData, inverterData, initElectricalFormVals })
                         </Field>
                     </div>
 
+                    {/* //------------------------------------------------------------------------------------------> */}
                 </fieldset>
-
 
             </Form>
 
